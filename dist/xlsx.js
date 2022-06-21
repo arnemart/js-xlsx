@@ -2,7 +2,7 @@
 /* vim: set ts=2: */
 /*jshint -W041 */
 /*jshint funcscope:true, eqnull:true */
-var XLSX = {};
+var XLSX = {}, cptable;
 (function make_xlsx(XLSX){
 XLSX.version = '0.8.20';
 var current_codepage = 1200, current_cptable;
@@ -1341,7 +1341,7 @@ var _fs, jszip;
 if(typeof JSZip !== 'undefined') jszip = JSZip;
 if (typeof exports !== 'undefined') {
 	if (typeof module !== 'undefined' && module.exports) {
-		if(has_buf && typeof jszip === 'undefined') jszip = require('js'+'zip');
+		if(has_buf && typeof jszip === 'undefined') jszip = require('./js'+'zip').JSZip;
 		if(typeof jszip === 'undefined') jszip = require('./js'+'zip').JSZip;
 		_fs = require('f'+'s');
 	}
@@ -1441,8 +1441,8 @@ if(has_buf) {
 			if(ww !== 0) { out[k++] = ww&255; out[k++] = ww>>>8; ww = 0; }
 			out[k++] = w%256; out[k++] = w>>>8;
 		}
-		out.length = k;
-		return out.toString('ucs2');
+
+		return out.slice(0,k).toString('ucs2');
 	};
 	var corpus = "foo bar baz\u00e2\u0098\u0083\u00f0\u009f\u008d\u00a3";
 	if(utf8read(corpus) == utf8readb(corpus)) utf8read = utf8readb;
@@ -12151,7 +12151,7 @@ var XmlNode = (function () {
     return this;
   }
 
-  var APOS = "'"; QUOTE = '"'
+  var APOS = "'", QUOTE = '"'
   var ESCAPED_QUOTE = {  }
   ESCAPED_QUOTE[QUOTE] = '&quot;'
   ESCAPED_QUOTE[APOS] = '&apos;'
