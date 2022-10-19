@@ -1338,14 +1338,9 @@ function getzipdata(zip, file, safe) {
 }
 
 var _fs, jszip;
-if(typeof JSZip !== 'undefined') jszip = JSZip;
-if (typeof exports !== 'undefined') {
-	if (typeof module !== 'undefined' && module.exports) {
+jszip = require('./jszip').JSZip;
+_fs = require('fs');
 
-		if(typeof jszip === 'undefined') jszip = require('./js'+'zip').JSZip;
-		_fs = require('f'+'s');
-	}
-}
 var attregexg=/([\w:]+)=((?:")([^"]*)(?:")|(?:')([^']*)(?:'))/g;
 var tagregex=/<[^>]*>/g;
 var nsregex=/<\w*:/, nsregex2 = /<(\/?)\w+:/;
